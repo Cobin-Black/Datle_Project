@@ -16,4 +16,19 @@ public class VisualizerService
     {
         return $"<line x1='{x1}' y1='{y1}' x2='{x2}' y2='{y2}' stroke='black' stroke-width='2' />";
     }
+
+    public string GenerateArraySvg(int[] array, int highlightingIndex)
+    {
+        string svg = "";
+
+        for (int i = 0; i < array.Length; i++)
+            {
+            string color = (i == highlightingIndex) ? "#ff4444" : "#0078d4";
+            svg += $@"
+            <rect x='{i * 45}' y='10' width='40' height='40' fill='{color}' />
+            <text x='{i * 45 + 20}' y='35' fill='white' text-anchor='middle'>{array[i]}</text>";
+            }
+            
+        return svg;
+    }
 }
