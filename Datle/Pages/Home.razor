@@ -46,46 +46,85 @@ else
                 <div class="alert alert-secondary">Visual representation for @currentChallenge.DSType coming soon!</div>
                 break;
         }
-    </div>
 
     <h1>@currentChallenge.Title</h1>
-    <p class="lead">@currentChallenge.Question</p>
+            <p>@currentChallenge.Question</p>
 
-    <div class="options-container">
-        @foreach (var (option, index) in currentChallenge.Options.Select((value, i) => (value, i)))
-        {
-            <button class="btn btn-outline-primary m-2" @onclick="() => CheckAnswer(index)" disabled="@hasAnswered">
-                @option
-            </button>
+            @foreach (var (option, index) in currentChallenge.Options.Select((v, i) => (v, i)))
+            {
+                <button class="btn @(selectedIndex == index ? "btn-primary" : "btn-outline-primary") m-2" 
+                        @onclick="() => SelectOption(index)" 
+                        disabled="@hasAnswered">
+                    @option
+                </button>
+            }
+
+            <div class="mt-4">
+                @if (!hasAnswered) {
+                    <button class="btn btn-success btn-lg" 
+                            @onclick="SubmitAnswer" 
+                            disabled="@(selectedIndex == null)">
+                        Submit Answer
+                    </button>
+                }
+            </div>
+
+            @if (hasAnswered) {
+                <div class="alert @(isCorrect ? "alert-success" : "alert-danger") mt-3">
+                    @currentChallenge.Explanation
+                </div>
+            }
         }
     </div>
 
-    @if (hasAnswered)
-    {
-        <div class="alert @(isCorrect ? "alert-success" : "alert-danger") mt-3">
-            <strong>@(isCorrect ? "Correct!" : "Not quite...")</strong> 
-            <br />
-            @currentChallenge.Explanation
+    <div class="col-md-4 border-start">
+        <h4>Past Challenges</h4>
+        <div class="list-group">
+            @* We will generate links for the last 7 days *@
+            @for (int i = 0; i < 7; i++)
+            {
+                var date = DateTime.Today.AddDays(-i);
+                <button class="list-group-item list-group-item-action" 
+                        @onclick="() => LoadChallenge(date)">
+                    @date.ToShortDateString()
+                </button>
+            }
         </div>
-    }
+    </div>
 }
 
 @code {
     private Challenge? currentChallenge;
-
-    protected override async Task OnInitializedAsync()
-    {
-        currentChallenge = await ChallengeSvc.GetChallengeByDate(DateTime.Today);
-    }
-
+    private int? selectedIndex; // Tracks the clicked button
     private bool hasAnswered = false;
     private bool isCorrect = false;
 
-    private void CheckAnswer(int index)
+    protected override async Task OnInitializedAsync()
     {
-        if (currentChallenge == null) return;
-        hasAnswered = true;
-        isCorrect = (index == currentChallenge.CorrectOptionIndex);
+        await LoadChallenge(DateTime.Today);
     }
-}
+
+    private async Task LoadChallenge(DateTime date)
+    {
+        // Reset state for the new question
+        hasAnswered = false;
+        isCorrect = false;
+        selectedIndex = null;
+    
+        currentChallenge = await ChallengeSvc.GetChallengeByDate(date);
+    }
+
+    private void SelectOption(int index)
+    {
+        if (hasAnswered) return;
+        selectedIndex = index; // Just highlights the button
+    }
+
+    private void SubmitAnswer()
+    {
+        if (currentChallenge == null || selectedIndex == null) return;
+    
+        hasAnswered = true;
+        isCorrect = (selectedIndex == currentChallenge.CorrectOptionIndex);
+    }
 }
