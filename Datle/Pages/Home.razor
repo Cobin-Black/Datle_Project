@@ -1,7 +1,51 @@
 ﻿@page "/"
 
-<PageTitle>Home</PageTitle>
+@page "/"
+@using DailyDSProject.Models
+@using DailyDSProject.Services
+@inject ChallengeService ChallengeSvc
+@inject VisualizerService VisualSvc
 
-<h1>Hello, world!</h1>
+<PageTitle>Datle: Your Daily Data Structure Challenge</PageTitle>
 
-Welcome to your new app.
+<h1>@currentChallenge.Title</h1>
+
+<div class="visualizer-box" style="border: 1px solid #ccc; padding: 20px; text-align: center;">
+    <svg width="200" height="150">
+        @((MarkupString)VisualSvc.GenerateLine(100, 30, 50, 80))
+        @((MarkupString)VisualSvc.GenerateLine(100, 30, 150, 80))
+        @((MarkupString)VisualSvc.GenerateNodeSvg(100, 30, 10)) @((MarkupString)VisualSvc.GenerateNodeSvg(50, 80, 5))   @((MarkupString)VisualSvc.GenerateNodeSvg(150, 80, 15)) </svg>
+</div>
+
+<p>@currentChallenge.Question</p>
+
+@foreach (var (option, index) in currentChallenge.Options.Select((value, i) => (value, i)))
+{
+    <button class="btn btn-outline-primary m-2" @onclick="() => CheckAnswer(index)">
+        @option
+    </button>
+}
+
+@if (hasAnswered)
+{
+    <div class="alert @(isCorrect ? "alert-success" : "alert-danger") mt-3">
+        @currentChallenge.Explanation
+    </div>
+}
+
+@code {
+    private Challenge currentChallenge = new();
+    private bool hasAnswered = false;
+    private bool isCorrect = false;
+
+    protected override void OnInitialized()
+    {
+        currentChallenge = ChallengeSvc.GetDailyChallenge();
+    }
+
+    private void CheckAnswer(int index)
+    {
+        hasAnswered = true;
+        isCorrect = (index == currentChallenge.CorrectOptionIndex);
+    }
+}
