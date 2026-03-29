@@ -1,4 +1,4 @@
-namespace DailyDSProject.Services;
+namespace Datle.Services;
 
 public class VisualizerService
 {

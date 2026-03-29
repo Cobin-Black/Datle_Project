@@ -1,6 +1,6 @@
-using DailyDSProject.Models;
+using Datle.Models;
 
-namespace DailyDSProject.Services;
+namespace Datle.Services;
 
 public class ChallengeService
 {

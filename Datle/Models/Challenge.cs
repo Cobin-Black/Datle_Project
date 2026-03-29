@@ -1,4 +1,4 @@
-namespace DailyDSProject.Models;
+namespace Datle.Models;
 
 public class Challenge
 {
