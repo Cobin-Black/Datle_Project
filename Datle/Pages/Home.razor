@@ -37,7 +37,13 @@ else
                 break;
 
             case "MasterTheorem":
-                <div class="math-formula" style="font-size: 1.5rem; padding: 20px;">
+                <div class="alert alert-info text-start" style="font-family: monospace; font-size: 0.9rem;">
+                    <strong>Master Theorem Reference:</strong><br />
+                    Case 1: If $f(n) = O(n^c)$ where $c \log_b a$, then $T(n) = \Theta(n^{\log_b a})$<br />
+                    Case 2: If $f(n) = \Theta(n^{\log_b a})$, then $T(n) = \Theta(n^{\log_b a} \log n)$<br />
+                    Case 3: If $f(n) = \Omega(n^c)$ where $c > \log_b a$, then $T(n) = \Theta(f(n))$
+                </div>
+                <div class="math-formula" style="font-size: 1.5rem; padding: 10px;">
                     $$T(n) = aT(n/b) + f(n)$$
                 </div>
                 break;
@@ -60,7 +66,8 @@ else
             }
 
             <div class="mt-4">
-                @if (!hasAnswered) {
+                @if (!hasAnswered) 
+                {
                     <button class="btn btn-success btn-lg" 
                             @onclick="SubmitAnswer" 
                             disabled="@(selectedIndex == null)">
@@ -74,22 +81,26 @@ else
                     @currentChallenge.Explanation
                 </div>
             }
-        }
     </div>
 
     <div class="col-md-4 border-start">
-        <h4>Past Challenges</h4>
-        <div class="list-group">
-            @* We will generate links for the last 7 days *@
-            @for (int i = 0; i < 7; i++)
+        <h4>Challenge History</h4>
+    <div class="list-group" style="max-height: 500px; overflow-y: auto;">
+        @if (pastChallenges != null)
+        {
+            @foreach (var oldChallenge in pastChallenges)
             {
-                var date = DateTime.Today.AddDays(-i);
-                <button class="list-group-item list-group-item-action" 
-                        @onclick="() => LoadChallenge(date)">
-                    @date.ToShortDateString()
+                <button class="list-group-item list-group-item-action d-flex justify-content-between align-items-center" 
+                        @onclick="() => LoadChallenge(oldChallenge.Date)">
+                    <div>
+                        <strong>@oldChallenge.Date.ToShortDateString()</strong><br/>
+                        <small class="text-muted">@oldChallenge.Title</small>
+                    </div>
+                    <span class="badge bg-secondary rounded-pill">@oldChallenge.DSType</span>
                 </button>
             }
-        </div>
+        }
+    </div>
     </div>
 }
 
@@ -99,9 +110,13 @@ else
     private bool hasAnswered = false;
     private bool isCorrect = false;
 
+    private List<Challenge> pastChallenges = new();
+
     protected override async Task OnInitializedAsync()
     {
         await LoadChallenge(DateTime.Today);
+
+        pastChallenges = ChallengeSvc.GetPastChallenges();
     }
 
     private async Task LoadChallenge(DateTime date)
