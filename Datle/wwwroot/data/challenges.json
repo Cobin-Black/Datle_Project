@@ -4,21 +4,23 @@
     "date": "2026-03-29",
     "title": "BST: Search Property",
     "dsType": "BST",
-    "question": "In a valid Binary Search Tree, where would you find the successor of a node that has a right child?",
-    "options": ["Its parent", "The right-most node of the left subtree", "The left-most node of the right subtree", "The root"],
+    "question": "In this BST, what is the in-order successor of the root node (10)?",
+    "options": ["5", "15", "12", "8"],
     "correctOptionIndex": 2,
-    "explanation": "The successor is the next largest value. If a right child exists, you go right once and then as far left as possible.",
+    "explanation": "The successor is the smallest value in the right subtree. For root 10, we go right to 15, then left to 12.",
+    "DataString": "10,5,15,3,8,12,18",
     "DSType": "BST"
   },
   {
     "id": 2,
-    "date": "2026-03-31",
+    "date": "2026-03-30",
     "title": "Master Theorem: Case 1",
     "dsType": "MasterTheorem",
     "question": "For the recurrence T(n) = 8T(n/2) + n^2, what is the asymptotic complexity?",
     "options": ["O(n^2)", "O(n^3)", "O(n^2 log n)", "O(n)"],
     "correctOptionIndex": 1,
-    "explanation": "Here a=8, b=2. n^(log_b a) is n^3. Since f(n) = n^2 is smaller than n^3, it falls under Case 1, resulting in O(n^3).",
+    "explanation": "Here a=8, b=2. n^(log_b a) is n^3. Since f(n) = n^2 is smaller than n^3, it falls under Case 1.",
+    "DataString": "",
     "DSType": "MasterTheorem"
   },
   {
@@ -26,10 +28,11 @@
     "date": "2026-03-31",
     "title": "Hash Table: Load Factor",
     "dsType": "HashTable",
-    "question": "If a Hash Table has 100 buckets and 75 elements, what is its load factor (alpha)?",
-    "options": ["0.25", "1.33", "75", "0.75"],
-    "correctOptionIndex": 3,
-    "explanation": "The load factor is defined as n/m (number of elements divided by number of buckets). 75/100 = 0.75.",
+    "question": "If this Hash Table has 5 buckets and 4 elements, what is its load factor?",
+    "options": ["0.25", "0.8", "1.25", "5"],
+    "correctOptionIndex": 1,
+    "explanation": "Load factor is n/m. 4 elements / 5 buckets = 0.8.",
+    "DataString": "5,10,22,31,44",
     "DSType": "HashTable"
   },
   {
@@ -37,10 +40,11 @@
     "date": "2026-04-01",
     "title": "Heap: Insertion",
     "dsType": "Heap",
-    "question": "When inserting a new element into a Max-Heap, where is it initially placed?",
-    "options": ["At the root", "In a random empty spot", "The next available leaf position", "The middle"],
+    "question": "If you insert '25' into this Max-Heap, which index will it initially occupy before bubbling up?",
+    "options": ["0", "2", "5", "1"],
     "correctOptionIndex": 2,
-    "explanation": "To maintain the 'Complete Tree' property, elements are added at the bottom-most, left-most available spot before 'bubbling up'.",
+    "explanation": "New elements are added to the next available leaf position (the end of the array) to keep the tree complete.",
+    "DataString": "50,30,40,10,20",
     "DSType": "Heap"
   },
   {
@@ -70,10 +74,11 @@
     "date": "2026-04-04",
     "title": "Linked List: Circularity",
     "dsType": "LinkedList",
-    "question": "In a Circular Singly Linked List, what does the 'Next' pointer of the last node point to?",
-    "options": ["Null", "The second node", "The head node", "The middle node"],
+    "question": "In this circular list [10->20->30], what does the 'Next' pointer of 30 point to?",
+    "options": ["Null", "20", "10", "40"],
     "correctOptionIndex": 2,
-    "explanation": "A circular list connects the tail back to the head, allowing for continuous traversal.",
+    "explanation": "In a circular singly linked list, the tail node points back to the head node.",
+    "DataString": "10,20,30",
     "DSType": "LinkedList"
   },
   {
@@ -103,10 +108,11 @@
     "date": "2026-04-07",
     "title": "Priority Queue: Min-Heap",
     "dsType": "Heap",
-    "question": "What is the time complexity to 'Extract-Min' from a Binary Min-Heap?",
-    "options": ["O(1)", "O(n)", "O(log n)", "O(n log n)"],
-    "correctOptionIndex": 2,
-    "explanation": "Removing the root requires swapping with the last leaf and then 'heapifying down,' which takes O(log n) time.",
+    "question": "Which value is currently at the root of this Min-Heap?",
+    "options": ["20", "5", "50", "15"],
+    "correctOptionIndex": 1,
+    "explanation": "In a Min-Heap, the smallest element (5) must always be at the root (index 0).",
+    "DataString": "5,15,20,50,30",
     "DSType": "Heap"
   },
   {
@@ -156,12 +162,13 @@
   {
     "id": 15,
     "date": "2026-04-12",
-    "title": "BST: Delete Min",
+    "title": "BST: Search Path",
     "dsType": "BST",
-    "question": "To find the minimum element in a BST, you should:",
-    "options": ["Look at the Root", "Traverse Right as far as possible", "Traverse Left as far as possible", "Perform a Level-order search"],
+    "question": "To find '8' in this tree, how many nodes do you visit (including 8)?",
+    "options": ["1", "2", "3", "4"],
     "correctOptionIndex": 2,
-    "explanation": "By definition, the smallest value in a BST is always in the left-most leaf (or the left-most node without a left child).",
+    "explanation": "Path: 20 (Root) -> 10 (Left) -> 8 (Left). That is 3 nodes total.",
+    "DataString": "20,10,30,5,15,8",
     "DSType": "BST"
   },
   {
@@ -261,12 +268,13 @@
   {
     "id": 24,
     "date": "2026-04-21",
-    "title": "Graphs: Degree of a Vertex",
+    "title": "Graphs: Node Count",
     "dsType": "Graphs",
-    "question": "In an undirected graph, what does the 'degree' of a vertex represent?",
-    "options": ["The value stored in the node", "The number of edges connected to it", "The total number of nodes in the graph", "The shortest path to the root"],
+    "question": "In this generated graph visualization, how many total edges would a 'Complete Graph' have?",
+    "options": ["5", "10", "20", "25"],
     "correctOptionIndex": 1,
-    "explanation": "The degree is the count of edges incident to the vertex. In directed graphs, this is split into 'in-degree' and 'out-degree'.",
+    "explanation": "For 5 nodes, a complete graph has n(n-1)/2 edges. 5(4)/2 = 10.",
+    "DataString": "5",
     "DSType": "Graphs"
   },
   {
@@ -451,5 +459,76 @@
     "explanation": "The sum of integers from 1 to N-1 is (N-1)(N)/2, which is O(N^2).",
     "DataString": "5,4,3,2,1",
     "DSType": "SelectionSort"
+  },
+  {
+    "id": 41,
+    "date": "2026-05-08",
+    "title": "BST: Leaf Nodes",
+    "dsType": "BST",
+    "question": "How many leaf nodes (nodes with no children) are in this tree?",
+    "options": ["1", "2", "3", "4"],
+    "correctOptionIndex": 2,
+    "explanation": "In this level-order array [10, 5, 15, 2], only the node '2' and '15' (which has no children in this specific data string) are leaves.",
+    "DataString": "10,5,15,2",
+    "DSType": "BST"
+  },
+  {
+    "id": 42,
+    "date": "2026-05-09",
+    "title": "Linked List: Search",
+    "dsType": "LinkedList",
+    "question": "If you are searching for the value '50' in this list, how many nodes must you visit?",
+    "options": ["1", "2", "3", "4"],
+    "correctOptionIndex": 3,
+    "explanation": "To find 50, you start at the head and follow 3 pointers, visiting 10, 20, 30, and finally 50.",
+    "DataString": "10,20,30,50",
+    "DSType": "LinkedList"
+  },
+  {
+    "id": 43,
+    "date": "2026-05-10",
+    "title": "Master Theorem: Square Root",
+    "dsType": "MasterTheorem",
+    "question": "For T(n) = 2T(n/4) + sqrt(n), what is the complexity?",
+    "options": ["O(sqrt(n))", "O(sqrt(n) log n)", "O(n)", "O(n log n)"],
+    "correctOptionIndex": 1,
+    "explanation": "a=2, b=4. n^(log_4 2) is n^0.5 (sqrt). Since f(n) matches the critical value, it is Case 2: O(sqrt(n) log n).",
+    "DSType": "MasterTheorem"
+  },
+  {
+    "id": 44,
+    "date": "2026-05-11",
+    "title": "Hash Table: Indexing",
+    "dsType": "HashTable",
+    "question": "Using the hash function h(k) = k mod 5, which bucket would the key '13' be placed in?",
+    "options": ["Bucket 1", "Bucket 2", "Bucket 3", "Bucket 4"],
+    "correctOptionIndex": 2,
+    "explanation": "13 divided by 5 leaves a remainder of 3. Therefore, it goes into Bucket 3.",
+    "DataString": "5,13",
+    "DSType": "HashTable"
+  },
+  {
+    "id": 45,
+    "date": "2026-05-12",
+    "title": "Selection Sort: Final Pass",
+    "dsType": "SelectionSort",
+    "question": "After 3 passes of Selection Sort on [1, 2, 3, 10, 5], what is the state of the array?",
+    "options": ["[1, 2, 3, 10, 5]", "[1, 2, 3, 5, 10]", "[5, 10, 3, 2, 1]", "[1, 2, 3, 4, 5]"],
+    "correctOptionIndex": 1,
+    "explanation": "The first 3 smallest elements (1, 2, 3) are already in place. The next pass finds 5 and swaps it with 10.",
+    "DataString": "1,2,3,10,5",
+    "DSType": "SelectionSort"
+  },
+  {
+    "id": 46,
+    "date": "2026-05-13",
+    "title": "Graphs: Edge Count",
+    "dsType": "Graphs",
+    "question": "How many edges are in a star graph with 6 nodes (1 center, 5 leaves)?",
+    "options": ["5", "6", "10", "15"],
+    "correctOptionIndex": 0,
+    "explanation": "In a star graph, every outer node connects only to the center. For 6 nodes total, there are 5 outer nodes and thus 5 edges.",
+    "DataString": "6",
+    "DSType": "Graphs"
   }
 ]

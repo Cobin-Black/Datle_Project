@@ -18,33 +18,62 @@ else
     <div class="visualizer-box" style="border: 1px solid #ccc; padding: 20px; text-align: center; margin-bottom: 20px;">
         @switch (currentChallenge.DSType)
         {
-            case "BST":
-                <svg width="200" height="150">
-                    @((MarkupString)VisualSvc.GenerateLine(100, 30, 50, 80))
-                    @((MarkupString)VisualSvc.GenerateLine(100, 30, 150, 80))
-                    @((MarkupString)VisualSvc.GenerateNodeSvg(100, 30, 10)) 
-                    @((MarkupString)VisualSvc.GenerateNodeSvg(50, 80, 5))   
-                    @((MarkupString)VisualSvc.GenerateNodeSvg(150, 80, 15)) 
-                </svg>
-                break;
-
             case "SelectionSort":
                 <svg width="300" height="150">
                     @((MarkupString)VisualSvc.DrawArray(sortLogic.Data, sortLogic.CurrentOuterIndex))
                 </svg>
                 break;
+
+            case "BST":
+            case "Heap":
             case "HeapSort":
-            case "CountingSort":
-            case "Arrays":
+            case "PriorityQueue":
+                <svg width="400" height="220">
+                    @((MarkupString)VisualSvc.DrawTree(sortLogic.Data))
+                </svg>
+                break;
+
+            
+            case "LinkedList":
+                <svg width="600" height="120">
+                    <defs>
+                        <marker id="arrowhead" markerWidth="10" markerHeight="7" 
+                            refX="10" refY="3.5" orient="auto">
+                            <polygon points="0 0, 10 3.5, 0 7" fill="#333" />
+                        </marker>
+                    </defs>
+                     @((MarkupString)VisualSvc.DrawLinkedList(sortLogic.Data))
+                 </svg>
+                break;
+
+            case "HashTable":
+                <div class="d-flex justify-content-center">
+                    <svg width="200" height="200">
+                        @* Pass the DataString from the JSON instead of "5,2" *@
+                        @((MarkupString)VisualSvc.DrawHashTable(currentChallenge.DataString))
+                    </svg>
+                </div>
+                break;
+
+            case "Graphs":
                 <svg width="300" height="150">
-                    @((MarkupString)VisualSvc.DrawArray(new int[] { 5, 2, 8, 1, 9 }, 0))
+                    @* Pass the DataString (node count) instead of 5 *@
+                    @((MarkupString)VisualSvc.DrawGraph(currentChallenge.DataString))
+                </svg>
+                break;
+
+            case "Arrays":
+            case "CountingSort":
+                <svg width="300" height="150">
+                    @* Use the loaded sortLogic data instead of a hardcoded array *@
+                    @((MarkupString)VisualSvc.DrawArray(sortLogic.Data, 0))
                 </svg>
                 break;
 
             case "MasterTheorem":
                 <div class="alert alert-info text-start" style="font-family: monospace; font-size: 0.9rem;">
                     <strong>Master Theorem Reference:</strong><br />
-                    Case 1: If $f(n) = O(n^c)$ where $c \log_b a$, then $T(n) = \Theta(n^{\log_b a})$<br />
+                    Case 1: If $f(n) = O(n^c)$ where $c &lt; \log_b a$, then $T(n) = \Theta(n^{\log_b a})$<br />
                     Case 2: If $f(n) = \Theta(n^{\log_b a})$, then $T(n) = \Theta(n^{\log_b a} \log n)$<br />
                     Case 3: If $f(n) = \Omega(n^c)$ where $c > \log_b a$, then $T(n) = \Theta(f(n))$
                 </div>
@@ -135,7 +164,7 @@ else
     
         currentChallenge = await ChallengeSvc.GetChallengeByDate(date);
 
-        if (currentChallenge != null && currentChallenge.DSType == "SelectionSort")
+        if (currentChallenge != null && !string.IsNullOrEmpty(currentChallenge.DataString))
         {
             sortLogic.LoadData(currentChallenge.DataString);
         }
