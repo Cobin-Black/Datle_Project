@@ -64,8 +64,7 @@
     "correctOptionIndex": 2,
     "explanation": "Picking the extreme values as pivots creates highly unbalanced partitions, leading to n levels of recursion instead of log n.",
     "DSType": "QuickSort"
-  }
-  [
+  },
   {
     "id": 7,
     "date": "2026-04-04",
@@ -110,5 +109,4 @@
     "explanation": "Removing the root requires swapping with the last leaf and then 'heapifying down,' which takes O(log n) time.",
     "DSType": "Heap"
   }
-]
 ]
