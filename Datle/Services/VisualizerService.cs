@@ -19,22 +19,38 @@ public class VisualizerService
 
     public string DrawArray(int[] numbers, int highlightIdx)
     {
+        if (numbers == null || numbers.Length == 0) return "";
+
         string svg = "";
+        int containerHeight = 150; // Match the height in your Home.razor <svg>
+        int barWidth = 40;
+        int spacing = 10;
 
         for (int i = 0; i < numbers.Length; i++)
         {
-            // We multiply the value by 15 to make the bars tall enough to see
-            int height = numbers[i] * 15; 
+            // Scale height so a value of 10 looks good but doesn't overflow
+            int barHeight = numbers[i] * 10; 
         
-            // If the index is 'sorted' (less than currentOuterIndex), make it green.
-            // If it's the one we just swapped, make it red. Otherwise, blue.
+            // Calculate Y so the bar sits at the bottom
+            // (ContainerHeight - barHeight - some padding for text)
+            int yPos = containerHeight - barHeight - 20;
+
+            // Color logic: Sorted (green), Current Min/Pivot (red), Unsorted (blue)
             string color = (i < highlightIdx) ? "#28a745" : (i == highlightIdx ? "#ff4444" : "#0078d4");
         
             svg += $@"
-            <rect x='{i * 45}' y='{120 - height}' width='40' height='{height}' fill='{color}' rx='4' />
-            <text x='{i * 45 + 20}' y='140' fill='white' text-anchor='middle' font-size='12'>{numbers[i]}</text>";
+                <g>
+                    <rect x='{i * (barWidth + spacing) + 10}' y='{yPos}' 
+                      width='{barWidth}' height='{barHeight}' 
+                      fill='{color}' rx='4' />
+                    <text x='{i * (barWidth + spacing) + 10 + (barWidth / 2)}' 
+                      y='{containerHeight - 5}' 
+                      fill='black' text-anchor='middle' font-size='12' font-weight='bold'>
+                    {numbers[i]}
+                </text>
+            </g>";
         }
-
+        
         return svg;
     }
 }
