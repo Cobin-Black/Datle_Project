@@ -8,44 +8,84 @@
 
 <PageTitle>Datle: Your Daily Data Structure Challenge</PageTitle>
 
-<h1>@currentChallenge.Title</h1>
-
-<div class="visualizer-box" style="border: 1px solid #ccc; padding: 20px; text-align: center;">
-    <svg width="200" height="150">
-        @((MarkupString)VisualSvc.GenerateLine(100, 30, 50, 80))
-        @((MarkupString)VisualSvc.GenerateLine(100, 30, 150, 80))
-        @((MarkupString)VisualSvc.GenerateNodeSvg(100, 30, 10)) @((MarkupString)VisualSvc.GenerateNodeSvg(50, 80, 5))   @((MarkupString)VisualSvc.GenerateNodeSvg(150, 80, 15)) </svg>
-</div>
-
-<p>@currentChallenge.Question</p>
-
-@foreach (var (option, index) in currentChallenge.Options.Select((value, i) => (value, i)))
+@if (currentChallenge == null)
 {
-    <button class="btn btn-outline-primary m-2" @onclick="() => CheckAnswer(index)">
-        @option
-    </button>
+    <p>Loading Daily Challenge...</p>
 }
-
-@if (hasAnswered)
+else
 {
-    <div class="alert @(isCorrect ? "alert-success" : "alert-danger") mt-3">
-        @currentChallenge.Explanation
+    <div class="visualizer-box" style="border: 1px solid #ccc; padding: 20px; text-align: center; margin-bottom: 20px;">
+        @switch (currentChallenge.DSType)
+        {
+            case "BST":
+                <svg width="200" height="150">
+                    @((MarkupString)VisualSvc.GenerateLine(100, 30, 50, 80))
+                    @((MarkupString)VisualSvc.GenerateLine(100, 30, 150, 80))
+                    @((MarkupString)VisualSvc.GenerateNodeSvg(100, 30, 10)) 
+                    @((MarkupString)VisualSvc.GenerateNodeSvg(50, 80, 5))   
+                    @((MarkupString)VisualSvc.GenerateNodeSvg(150, 80, 15)) 
+                </svg>
+                break;
+
+            case "SelectionSort":
+            case "HeapSort":
+            case "CountingSort":
+            case "Arrays":
+                <svg width="300" height="150">
+                    @((MarkupString)VisualSvc.DrawArray(new int[] { 5, 2, 8, 1, 9 }, 0))
+                </svg>
+                break;
+
+            case "MasterTheorem":
+                <div class="math-formula" style="font-size: 1.5rem; padding: 20px;">
+                    $$T(n) = aT(n/b) + f(n)$$
+                </div>
+                break;
+
+            default:
+                <div class="alert alert-secondary">Visual representation for @currentChallenge.DSType coming soon!</div>
+                break;
+        }
     </div>
+
+    <h1>@currentChallenge.Title</h1>
+    <p class="lead">@currentChallenge.Question</p>
+
+    <div class="options-container">
+        @foreach (var (option, index) in currentChallenge.Options.Select((value, i) => (value, i)))
+        {
+            <button class="btn btn-outline-primary m-2" @onclick="() => CheckAnswer(index)" disabled="@hasAnswered">
+                @option
+            </button>
+        }
+    </div>
+
+    @if (hasAnswered)
+    {
+        <div class="alert @(isCorrect ? "alert-success" : "alert-danger") mt-3">
+            <strong>@(isCorrect ? "Correct!" : "Not quite...")</strong> 
+            <br />
+            @currentChallenge.Explanation
+        </div>
+    }
 }
 
 @code {
-    private Challenge currentChallenge = new();
+    private Challenge? currentChallenge;
+
+    protected override async Task OnInitializedAsync()
+    {
+        currentChallenge = await ChallengeSvc.GetChallengeByDate(DateTime.Today);
+    }
+
     private bool hasAnswered = false;
     private bool isCorrect = false;
 
-    protected override void OnInitialized()
-    {
-        currentChallenge = ChallengeSvc.GetDailyChallenge();
-    }
-
     private void CheckAnswer(int index)
     {
+        if (currentChallenge == null) return;
         hasAnswered = true;
         isCorrect = (index == currentChallenge.CorrectOptionIndex);
     }
+}
 }

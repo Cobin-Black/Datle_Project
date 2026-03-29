@@ -1,0 +1,68 @@
+[
+  {
+    "id": 1,
+    "date": "2026-03-29",
+    "title": "Master Theorem: Case 1",
+    "dsType": "MasterTheorem",
+    "question": "For the recurrence T(n) = 8T(n/2) + n^2, what is the asymptotic complexity?",
+    "options": ["O(n^2)", "O(n^3)", "O(n^2 log n)", "O(n)"],
+    "correctOptionIndex": 1,
+    "explanation": "Here a=8, b=2. n^(log_b a) is n^3. Since f(n) = n^2 is smaller than n^3, it falls under Case 1, resulting in O(n^3).",
+    "DSType": "MasterTheorem"
+  },
+  {
+    "id": 2,
+    "date": "2026-03-30",
+    "title": "BST: Search Property",
+    "dsType": "BST",
+    "question": "In a valid Binary Search Tree, where would you find the successor of a node that has a right child?",
+    "options": ["Its parent", "The right-most node of the left subtree", "The left-most node of the right subtree", "The root"],
+    "correctOptionIndex": 2,
+    "explanation": "The successor is the next largest value. If a right child exists, you go right once and then as far left as possible.",
+    "DSType": "BST"
+  },
+  {
+    "id": 3,
+    "date": "2026-03-31",
+    "title": "Hash Table: Load Factor",
+    "dsType": "HashTable",
+    "question": "If a Hash Table has 100 buckets and 75 elements, what is its load factor (alpha)?",
+    "options": ["0.25", "1.33", "75", "0.75"],
+    "correctOptionIndex": 3,
+    "explanation": "The load factor is defined as n/m (number of elements divided by number of buckets). 75/100 = 0.75.",
+    "DSType": "HashTable"
+  },
+  {
+    "id": 4,
+    "date": "2026-04-01",
+    "title": "Heap: Insertion",
+    "dsType": "Heap",
+    "question": "When inserting a new element into a Max-Heap, where is it initially placed?",
+    "options": ["At the root", "In a random empty spot", "The next available leaf position", "The middle"],
+    "correctOptionIndex": 2,
+    "explanation": "To maintain the 'Complete Tree' property, elements are added at the bottom-most, left-most available spot before 'bubbling up'.",
+    "DSType": "Heap"
+  },
+  {
+    "id": 5,
+    "date": "2026-04-02",
+    "title": "Counting Sort: Constraints",
+    "dsType": "CountingSort",
+    "question": "What is the primary requirement for a dataset to be efficiently sorted by Counting Sort?",
+    "options": ["Must be floating point numbers", "Must be integers in a known, small range", "Must be already partially sorted", "Must be larger than 1 million elements"],
+    "correctOptionIndex": 1,
+    "explanation": "Counting Sort creates an auxiliary array based on the range of values. If the range (k) is too large, the space complexity O(n+k) becomes inefficient.",
+    "DSType": "CountingSort"
+  },
+  {
+    "id": 6,
+    "date": "2026-04-03",
+    "title": "Quick Sort: Pivot Choice",
+    "dsType": "QuickSort",
+    "question": "In Quicksort, what happens to the time complexity if the smallest or largest element is always picked as the pivot?",
+    "options": ["It becomes O(n log n)", "It stays O(n)", "It degrades to O(n^2)", "It becomes O(log n)"],
+    "correctOptionIndex": 2,
+    "explanation": "Picking the extreme values as pivots creates highly unbalanced partitions, leading to n levels of recursion instead of log n.",
+    "DSType": "QuickSort"
+  }
+]

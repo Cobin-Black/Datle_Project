@@ -1,19 +1,28 @@
+using System.Net.Http.Json;
+using System.Net.Http;
 using Datle.Models;
 
 namespace Datle.Services;
 
 public class ChallengeService
 {
-    public Challenge GetDailyChallenge()
+    private readonly HttpClient _http;
+    private List<Challenge>? _cache;
+
+    public ChallengeService(HttpClient http)
     {
-        // For now, we hardcode one. Later, this will fetch from your Azure Database!
-        return new Challenge
+        _http = http;
+    }
+
+    public async Task<Challenge?> GetChallengeByDate(DateTime date)
+    {
+        // Only load the file once to save memory
+        if (_cache == null)
         {
-            Title = "Array Capacity",
-            Question = "An Array has a capacity of 4. If we add a 5th element, what usually happens in a Dynamic Array (List)?",
-            Options = new[] { "It Crashes", "It doubles to 8", "It stays at 4", "It becomes 5" },
-            CorrectOptionIndex = 1,
-            Explanation = "Dynamic arrays typically double their capacity (O(n) operation) to make room for future growth."
-        };
+            _cache = await _http.GetFromJsonAsync<List<Challenge>>("data/challenges.json");
+        }
+
+        // Return the challenge for the specific date
+        return _cache?.FirstOrDefault(c => c.Date.Date == date.Date);
     }
 }

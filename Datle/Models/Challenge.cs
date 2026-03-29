@@ -2,6 +2,8 @@ namespace Datle.Models;
 
 public class Challenge
 {
+    public int Id { get; set; }
+    public DateTime Date { get; set; }
     public string Title { get; set; } = "";
     public string Question { get; set; } = "";
     public string[] Options { get; set; } = new string[4];

@@ -1,0 +1,25 @@
+@page "/selectionsort"
+@using Datle.DataStructures
+@using Datle.Services
+@inject VisualizerService VisualSvc
+
+<h3>Selection Sort Visualizer</h3>
+<p>Click "Next Step" to see the algorithm find the minimum value and swap it into place.</p>
+
+<div style="background: #2d2d2d; padding: 40px; border-radius: 10px; display: inline-block;">
+    <svg width="300" height="150">
+        @((MarkupString)VisualSvc.DrawArray(logic.Data, logic.CurrentOuterIndex))
+    </svg>
+</div>
+
+<div class="mt-3">
+    <button class="btn btn-primary" @onclick="Step">Next Step</button>
+    <button class="btn btn-secondary" @onclick="Reset">Reset</button>
+</div>
+
+@code {
+    private SelectionSortLogic logic = new();
+
+    private void Step() => logic.NextStep();
+    private void Reset() => logic.Reset();
+}
