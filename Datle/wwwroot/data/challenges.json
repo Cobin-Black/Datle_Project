@@ -2,17 +2,6 @@
   {
     "id": 1,
     "date": "2026-03-29",
-    "title": "Master Theorem: Case 1",
-    "dsType": "MasterTheorem",
-    "question": "For the recurrence T(n) = 8T(n/2) + n^2, what is the asymptotic complexity?",
-    "options": ["O(n^2)", "O(n^3)", "O(n^2 log n)", "O(n)"],
-    "correctOptionIndex": 1,
-    "explanation": "Here a=8, b=2. n^(log_b a) is n^3. Since f(n) = n^2 is smaller than n^3, it falls under Case 1, resulting in O(n^3).",
-    "DSType": "MasterTheorem"
-  },
-  {
-    "id": 2,
-    "date": "2026-03-30",
     "title": "BST: Search Property",
     "dsType": "BST",
     "question": "In a valid Binary Search Tree, where would you find the successor of a node that has a right child?",
@@ -20,6 +9,17 @@
     "correctOptionIndex": 2,
     "explanation": "The successor is the next largest value. If a right child exists, you go right once and then as far left as possible.",
     "DSType": "BST"
+  },
+  {
+    "id": 2,
+    "date": "2026-03-31",
+    "title": "Master Theorem: Case 1",
+    "dsType": "MasterTheorem",
+    "question": "For the recurrence T(n) = 8T(n/2) + n^2, what is the asymptotic complexity?",
+    "options": ["O(n^2)", "O(n^3)", "O(n^2 log n)", "O(n)"],
+    "correctOptionIndex": 1,
+    "explanation": "Here a=8, b=2. n^(log_b a) is n^3. Since f(n) = n^2 is smaller than n^3, it falls under Case 1, resulting in O(n^3).",
+    "DSType": "MasterTheorem"
   },
   {
     "id": 3,
@@ -108,5 +108,96 @@
     "correctOptionIndex": 2,
     "explanation": "Removing the root requires swapping with the last leaf and then 'heapifying down,' which takes O(log n) time.",
     "DSType": "Heap"
+  },
+  {
+    "id": 11,
+    "date": "2026-04-08",
+    "title": "Graph: DFS vs BFS",
+    "dsType": "Graphs",
+    "question": "Which data structure is typically used to implement Breadth-First Search (BFS)?",
+    "options": ["Stack", "Queue", "Priority Queue", "Linked List"],
+    "correctOptionIndex": 1,
+    "explanation": "BFS explores neighbors level-by-level, requiring a First-In-First-Out (FIFO) Queue to track the next nodes to visit.",
+    "DSType": "Graphs"
+  },
+  {
+    "id": 12,
+    "date": "2026-04-09",
+    "title": "Hash Table: Collisions",
+    "dsType": "HashTable",
+    "question": "In 'Open Addressing' with Linear Probing, what happens when a collision occurs?",
+    "options": ["A linked list is created at that bucket", "The element is discarded", "The algorithm checks the next available bucket (index + 1)", "The table size doubles immediately"],
+    "correctOptionIndex": 2,
+    "explanation": "Linear Probing resolves collisions by searching sequentially for the next empty slot in the array.",
+    "DSType": "HashTable"
+  },
+  {
+    "id": 13,
+    "date": "2026-04-10",
+    "title": "Heap Sort: Build-Heap",
+    "dsType": "HeapSort",
+    "question": "What is the time complexity of the 'Build-Heap' operation on an unordered array of size n?",
+    "options": ["O(log n)", "O(n)", "O(n log n)", "O(n^2)"],
+    "correctOptionIndex": 1,
+    "explanation": "While sorting takes O(n log n), simply converting an array into a valid heap structure can be done in linear O(n) time.",
+    "DSType": "HeapSort"
+  },
+  {
+    "id": 14,
+    "date": "2026-04-11",
+    "title": "Master Theorem: Case 2",
+    "dsType": "MasterTheorem",
+    "question": "For T(n) = 2T(n/2) + n, what is the complexity?",
+    "options": ["O(n)", "O(n log n)", "O(n^2)", "O(log n)"],
+    "correctOptionIndex": 1,
+    "explanation": "Here a=2, b=2, so n^(log_2 2) = n^1. Since f(n)=n matches n^1, this is Case 2: O(n log n).",
+    "DSType": "MasterTheorem"
+  },
+  {
+    "id": 15,
+    "date": "2026-04-12",
+    "title": "BST: Delete Min",
+    "dsType": "BST",
+    "question": "To find the minimum element in a BST, you should:",
+    "options": ["Look at the Root", "Traverse Right as far as possible", "Traverse Left as far as possible", "Perform a Level-order search"],
+    "correctOptionIndex": 2,
+    "explanation": "By definition, the smallest value in a BST is always in the left-most leaf (or the left-most node without a left child).",
+    "DSType": "BST"
+  },
+  {
+    "id": 16,
+    "date": "2026-04-13",
+    "title": "Quicksort: Partitioning",
+    "dsType": "QuickSort",
+    "question": "Using the last element (10) as a pivot for [5, 15, 2, 10], which element is the first to be swapped?",
+    "options": ["5", "15", "2", "None"],
+    "correctOptionIndex": 1,
+    "explanation": "In the Lomuto partition, 15 is greater than the pivot 10, so it stays until a smaller element (2) is found to swap with it.",
+    "DataString": "5,15,2,10",
+    "DSType": "QuickSort"
+  },
+  {
+    "id": 17,
+    "date": "2026-04-14",
+    "title": "Hash Table: Double Hashing",
+    "dsType": "HashTable",
+    "question": "What is the primary benefit of Double Hashing over Linear Probing?",
+    "options": ["Uses less memory", "Eliminates primary clustering", "Faster initial hash", "Simplifies deletion"],
+    "correctOptionIndex": 1,
+    "explanation": "Double hashing uses a second hash function to determine the step size, preventing long 'clusters' of occupied slots.",
+    "DataString": "",
+    "DSType": "HashTable"
+  },
+  {
+    "id": 18,
+    "date": "2026-04-15",
+    "title": "Graphs: Dijkstra's Prep",
+    "dsType": "Graphs",
+    "question": "Which data structure is most commonly used to efficiently find the 'next closest node' in Dijkstra's Algorithm?",
+    "options": ["Stack", "Hash Table", "Min-Priority Queue", "Binary Search Tree"],
+    "correctOptionIndex": 2,
+    "explanation": "A Min-Priority Queue (usually a Heap) allows Dijkstra's to pull the node with the current smallest distance in O(log V) time.",
+    "DataString": "",
+    "DSType": "Graphs"
   }
 ]
