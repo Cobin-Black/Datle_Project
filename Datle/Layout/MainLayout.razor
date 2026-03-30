@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@using Datle.Shared
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -6,6 +8,7 @@
 
     <main>
         <div class="top-row px-4">
+            <StreakBadge @ref="streakBadge" />
             <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
         </div>
 
@@ -14,3 +17,13 @@
         </article>
     </main>
 </div>
+
+@code {
+    private StreakBadge? streakBadge; // This matches the @ref name above
+
+    public void NotifyStreakChanged() 
+    {
+        // Tell the badge to run its refresh logic
+        streakBadge?.Refresh();
+    }
+}

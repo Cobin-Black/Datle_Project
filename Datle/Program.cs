@@ -11,5 +11,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddScoped<ChallengeService>();
 builder.Services.AddSingleton<VisualizerService>();
+builder.Services.AddScoped<StorageService>();
 
 await builder.Build().RunAsync();

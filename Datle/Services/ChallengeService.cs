@@ -28,13 +28,13 @@ public class ChallengeService
 
     public List<Challenge> GetPastChallenges()
     {
+        // If the cache is null, return an empty list so the app doesn't crash
         if (_cache == null) return new List<Challenge>();
 
-        // Return all challenges from the JSON where the date is today or earlier
-        // We sort them by date descending so the newest ones are at the top of the sidebar
+        // Use _cache instead of _challenges
         return _cache
-            .Where(c => c.Date.Date <= DateTime.Today)
-            .OrderByDescending(c => c.Date)
-            .ToList();
+        .Where(c => c.Date <= DateTime.Today)
+        .OrderByDescending(c => c.Date)
+        .ToList();
     }
 }
