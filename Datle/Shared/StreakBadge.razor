@@ -1,0 +1,31 @@
+@inject Datle.Services.StorageService StorageSvc
+@inject Datle.Services.ChallengeService ChallengeSvc
+
+<div class="d-flex align-items-center me-3" title="Your Daily Streak">
+    <span style="font-size: 1.2rem; font-weight: bold; color: #ff8c00;">🔥 @streakCount</span>
+</div>
+
+@code {
+    private int streakCount = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var challenges = ChallengeSvc.GetPastChallenges();
+        var allDates = challenges.Select(c => c.Date).ToList();
+        streakCount = await StorageSvc.CalculateStreak(allDates);
+    }
+
+    // We can call this from Home.razor when a user submits an answer
+    public async Task Refresh()
+    {
+        var challenges = ChallengeSvc.GetPastChallenges();
+        var allDates = challenges.Select(c => c.Date).ToList();
+        streakCount = await StorageSvc.CalculateStreak(allDates);
+        StateHasChanged();
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await Refresh();
+    }
+}
